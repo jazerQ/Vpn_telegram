@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vpn_Telegram", "Vpn_Telegra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{453CBA94-3873-4A31-9C4F-2A41E719E44B}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		secret.json = secret.json
 	EndProjectSection
 EndProject
@@ -15,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{FF9D2089-525D-4AAE-83EF-5C9034CAAA43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{34FC424D-EEC2-4B3E-8DB1-3EE4266AEEA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{37402B7C-ADF9-4CCA-B9CD-AD955F8A9305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +41,10 @@ Global
 		{34FC424D-EEC2-4B3E-8DB1-3EE4266AEEA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34FC424D-EEC2-4B3E-8DB1-3EE4266AEEA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34FC424D-EEC2-4B3E-8DB1-3EE4266AEEA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37402B7C-ADF9-4CCA-B9CD-AD955F8A9305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37402B7C-ADF9-4CCA-B9CD-AD955F8A9305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37402B7C-ADF9-4CCA-B9CD-AD955F8A9305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37402B7C-ADF9-4CCA-B9CD-AD955F8A9305}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

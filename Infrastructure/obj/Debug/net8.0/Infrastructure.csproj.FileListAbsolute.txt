@@ -17,3 +17,4 @@ C:\Users\jazer\source\repos\Vpn_Telegram\Infrastructure\bin\Debug\net8.0\DataAcc
 C:\Users\jazer\source\repos\Vpn_Telegram\Infrastructure\bin\Debug\net8.0\DataAccess.pdb
 C:\Users\jazer\source\repos\Vpn_Telegram\Infrastructure\bin\Debug\net8.0\Core.pdb
 C:\Users\jazer\source\repos\Vpn_Telegram\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
+C:\Users\jazer\source\repos\Vpn_Telegram\Infrastructure\obj\Debug\net8.0\Infrastructure.sourcelink.json
