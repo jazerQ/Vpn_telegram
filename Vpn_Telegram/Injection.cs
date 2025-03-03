@@ -7,9 +7,14 @@ using Application;
 using Core.Abstractions;
 using DataAccess;
 using Infrastructure;
+using Infrastructure.VpnLibrary;
+using Infrastructure.VpnLibrary.apiRoutes.Get;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using VpnLibrary;
+using Weather_bot.Actions;
+using Weather_bot.Commands;
 
 namespace Vpn_Telegram
 {
@@ -19,13 +24,19 @@ namespace Vpn_Telegram
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddMemoryCache();
+            serviceCollection.AddSingleton<IRedisService, RedisService>();
+            serviceCollection.AddScoped<ActionByKey>();
             serviceCollection.AddDbContext<TelegramDbContext>(options => options.UseNpgsql(appsettingJsonReader.GetConnectionString()));
             serviceCollection.AddScoped<ITelegramUserRepository, TelegramUserRepository>();
             serviceCollection.AddScoped<ITelegramUserService, TelegramUserService>();
             serviceCollection.AddScoped<BotHandler>();
-            serviceCollection.AddHttpClient();
-            serviceCollection.AddScoped<GetWeatherService>();
-            serviceCollection.AddScoped<GetLatLonData>();
+            serviceCollection.AddHttpClient(StaticInfo.MainPath).ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            }); ;
+            serviceCollection.AddScoped<VpnAccessGlobal>();
+            serviceCollection.AddScoped<VpnCommand>();
+            serviceCollection.AddScoped<IInbounds, Inbounds>();
             var serviceProvider = serviceCollection.BuildServiceProvider();
             return serviceProvider;
         }

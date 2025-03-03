@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Vpn_Telegram\\Vpn_Telegram.csproj": {}
+    "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Vpn_Telegram\\Vpn_Telegram.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Application\\Application.csproj": {
+    "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Application\\Application.csproj",
+        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Application\\Application.csproj",
+        "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\jazer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Application\\obj\\",
+        "outputPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj"
+              "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -74,14 +74,14 @@
         }
       }
     },
-    "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Core\\Core.csproj": {
+    "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\jazer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Core\\obj\\",
+        "outputPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -146,14 +146,14 @@
         }
       }
     },
-    "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj": {
+    "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj",
+        "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\jazer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\obj\\",
+        "outputPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -175,8 +175,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Core\\Core.csproj"
+              "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Core\\Core.csproj"
               }
             }
           }
@@ -236,14 +236,14 @@
         }
       }
     },
-    "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\jazer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -265,8 +265,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj"
+              "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -338,14 +338,14 @@
         }
       }
     },
-    "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Vpn_Telegram\\Vpn_Telegram.csproj": {
+    "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Vpn_Telegram\\Vpn_Telegram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Vpn_Telegram\\Vpn_Telegram.csproj",
+        "projectUniqueName": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Vpn_Telegram\\Vpn_Telegram.csproj",
         "projectName": "Vpn_Telegram",
-        "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Vpn_Telegram\\Vpn_Telegram.csproj",
+        "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Vpn_Telegram\\Vpn_Telegram.csproj",
         "packagesPath": "C:\\Users\\jazer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Vpn_Telegram\\obj\\",
+        "outputPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Vpn_Telegram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -367,14 +367,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Application\\Application.csproj"
+              "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Application\\Application.csproj"
               },
-              "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\DataAccess\\DataAccess.csproj"
+              "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\DataAccess\\DataAccess.csproj"
               },
-              "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\jazer\\source\\repos\\Vpn_Telegram\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\jazer\\source\\repos\\Weather_bot\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }

@@ -10,6 +10,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using Vpn_Telegram;
+using StackExchange.Redis;
 
 internal class Program
 {
@@ -18,7 +19,6 @@ internal class Program
     //private static FromMemoryCacheToDb _toDb = service.GetService<FromMemoryCacheToDb>();
     private async static Task Main(string[] args)
     {
-        //_toDb = new FromMemoryCacheToDb(_service.CreateDbContext(args));
         var scope = _service.CreateScope();
         var botHandler = scope.ServiceProvider.GetRequiredService<BotHandler>();
         using var cts = new CancellationTokenSource();

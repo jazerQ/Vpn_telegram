@@ -1,90 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application;
 using Core.Abstractions;
 using Core.Entities;
 using Infrastructure;
+using Infrastructure.VpnLibrary;
+using Microsoft.EntityFrameworkCore.Storage;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Weather_bot.Actions;
+using Weather_bot.Commands;
+using Weather_bot.Commands.Keyboard;
+using Weather_bot.Controllers;
 
 namespace Vpn_Telegram
 {
     public class BotHandler
     {
         private readonly ITelegramUserService _serviceUser;
-        private readonly GetWeatherService _weatherService;
-        public BotHandler(ITelegramUserService serviceUser, GetWeatherService weatherService)
+        private readonly IRedisService _redisService;
+        private readonly ActionByKey _actionByKey;
+        private readonly VpnCommand _vpnCommand;
+        public BotHandler(ITelegramUserService serviceUser, IRedisService redisService, ActionByKey actionByKey, VpnCommand vpnCommand)
         {
-            _weatherService = weatherService;
+            _redisService = redisService;
             _serviceUser = serviceUser;
+            _actionByKey = actionByKey;
+            _vpnCommand = vpnCommand;            
         }
         public async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
         {
             if (update.Message is not { } message) return;
             if (message.Text is not { } messageText) return;
+            string user = await _serviceUser.GetNameById(message.From.Id, cancellationToken) ?? message.From.FirstName;
             long chatId = message.Chat.Id;
-            switch (message.Text.Split(' ')[0].ToLower())
+            if(await _redisService.Db.KeyExistsAsync(chatId.ToString()))
+            {
+                await _actionByKey.DoAction(bot, message, cancellationToken);
+                return;
+            }
+            switch (message.Text.ToLower())
             {
                 case "/start":
-                    await bot.SendMessage(chatId, $"Id - {message.From.Id}\nFirstname - {message.From.FirstName}, LastName - {message.From.LastName},Username - {message.From.Username} , Привет я твой телеграмм бот для VPN 🚀!", cancellationToken: cancellationToken);
+                    await StartCommands.ExecuteAsync(bot, chatId, user, cancellationToken);
                     break;
                 case "/help":
                     await bot.SendMessage(chatId, $"список команд для бота: /start - запускает бота \n/help - список возможных команд", cancellationToken: cancellationToken);
+                    break;   
+                case "поменять имя":
+                    await NameCommands.ChangeNameRequest(_redisService.Db, bot, chatId, cancellationToken);
                     break;
-                case "/setname" when message.Text.Split(' ').Length > 1:
-                    try
-                    {
-                        var nickname = message.Text.Split(' ')[1];
-                        if (nickname.Length > 50) throw new Exception("Too big name");
-                        if (nickname.Length < 5) throw new Exception("Very small name");
-                        TelegramUser tgUser = new TelegramUser
-                        {
-                            Id = message.From.Id,
-                            FirstName = message.From.FirstName,
-                            LastName = message.From.LastName ?? "NaN",
-                            Name = nickname,
-                            Shortname = message.From.Username ?? "NaN",
-                            StartDate = DateTime.UtcNow
-                        };
-                        await _serviceUser.AddUser(tgUser, cancellationToken);
-                        await bot.SendMessage(chatId, $"ооо привет, {nickname}!", cancellationToken: cancellationToken);
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        await bot.SendMessage(chatId, $"имя не подходит по длине", cancellationToken: cancellationToken);
-                        break;
-                    }
-                case "/weather" when message.Text.Split(' ').Length > 1:
-                    string city = GetCorrectCityName.Get(message.Text.Trim());
-                    await _weatherService.GetWeather(city, cancellationToken);
-                    Console.WriteLine($"{city}    {city.Length}");
+                case "мое имя":
+                    await NameCommands.GetMyName(bot, chatId, user, cancellationToken);
                     break;
-                case "/weather":
-                    await bot.SendMessage(chatId, "пропиши /weather {город} чтобы получить данные", cancellationToken: cancellationToken);
+                case "о проекте":
+                    await AboutUsCommands.GetInfo(bot, chatId, user, cancellationToken);
                     break;
-                case "/setname":
-                    await bot.SendMessage(chatId, "укажите команду /setname {имя}", cancellationToken: cancellationToken);
+                case "база участников":
+                    await _vpnCommand.GetList();
+                    await bot.SendMessage(chatId, "отправил в логи", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
                     break;
-                case "/myname":
-                    try
-                    {
-                        var n1 = DateTime.Now;
-                        string user = await _serviceUser.GetNameById(message.From.Id, cancellationToken);
-                        await bot.SendMessage(chatId, $"привет {user}", cancellationToken: cancellationToken);
-                        Console.WriteLine(DateTime.Now - n1);
-                        break;
-                        
-                    }catch(Exception ex)
-                    {
-                        await bot.SendMessage(chatId, "не могу найти имя, воспольлуйтесь командой /setname {name}", cancellationToken: cancellationToken);
-                        break;
-                    }
-                    
                 default:
-                    await bot.SendMessage(chatId, $"я не понимаю такой команды", cancellationToken: cancellationToken);
+                    await bot.SendMessage(chatId, $"я не понимаю такой команды", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
                     break;
 
             }

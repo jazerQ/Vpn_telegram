@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Models
+namespace Core.Enums
 {
-    internal class WeatherResponse
+    public enum StatesOfUser
     {
+        WaitingWeather,
+        WaitingName
     }
 }
