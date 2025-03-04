@@ -15,6 +15,8 @@ namespace Core.Entities
         [Required]public string LastName { get; set; } = string.Empty;
         [Required]public string Shortname { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
+        public Guid VpnClientId { get; set; }
+        public VpnClient? VpnClient { get; set; }
 
     }
 }

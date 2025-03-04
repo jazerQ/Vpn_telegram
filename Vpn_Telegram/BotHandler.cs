@@ -78,7 +78,7 @@ namespace Vpn_Telegram
                 case "о проекте":
                     await AboutUsCommands.GetInfo(bot, chatId, user, cancellationToken);
                     break;
-                case "база участников":
+                case "базаучастников":
                     await _vpnCommand.GetList();
                     await bot.SendMessage(chatId, "отправил в логи", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
                     break;

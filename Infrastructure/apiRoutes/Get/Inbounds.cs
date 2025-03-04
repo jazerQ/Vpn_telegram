@@ -59,39 +59,29 @@ namespace Infrastructure.VpnLibrary.apiRoutes.Get
         }
         public async Task AddToInbound(HttpHeaders headers, string username) 
         {
-            Client client = new Client
-            {
-                id = Guid.NewGuid(),
-                email = username,
-                expiryTime = 1741056935,
-                flow = "",
-                enable = true,
-                limitIp = 1,
-                totalGB = 1,
-                subId = "6va6ba458abjl532"
-            };
-            List<Client> clients = new List<Client>() { client };
-            Clients clients1 = new Clients { clients = clients };
-            string clientsJson = JsonConvert.SerializeObject(clients1);
-            Console.WriteLine(clientsJson);
-            AddClientToInboundModel addClientToInbound = new AddClientToInboundModel
-            {
-                id = 1,
-                settings = clientsJson
+            
+            //List<Client> clients = new List<Client>() { client };
+            //Clients clients1 = new Clients { clients = clients };
+            //string clientsJson = JsonConvert.SerializeObject(clients1);
+            //Console.WriteLine(clientsJson);
+            //AddClientToInboundModel addClientToInbound = new AddClientToInboundModel
+            //{
+            //    id = 1,
+            //    settings = clientsJson
                 
-            };
-            string secondJson = JsonConvert.SerializeObject(addClientToInbound);
-            Console.WriteLine("\n\n\n\n\n\n\n");
-            Console.WriteLine(secondJson);
-            string json = JsonConvert.SerializeObject(addClientToInbound);                                             ///
-            HttpRequestMessage request = new HttpRequestMessage(System.Net.Http.HttpMethod.Post, $"{StaticInfo.MainPath}/panel/api/inbounds/addClient")
-            {
-                Content = new StringContent(secondJson, Encoding.UTF8, "application/json")
-            };
-            await request.GetHeaders(headers);
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
+            //};
+            //string secondJson = JsonConvert.SerializeObject(addClientToInbound);
+            //Console.WriteLine("\n\n\n\n\n\n\n");
+            //Console.WriteLine(secondJson);
+            //string json = JsonConvert.SerializeObject(addClientToInbound);                                             ///
+            //HttpRequestMessage request = new HttpRequestMessage(System.Net.Http.HttpMethod.Post, $"{StaticInfo.MainPath}/panel/api/inbounds/addClient")
+            //{
+            //    Content = new StringContent(secondJson, Encoding.UTF8, "application/json")
+            //};
+            //await request.GetHeaders(headers);
+            //HttpResponseMessage response = await _httpClient.SendAsync(request);
+            //response.EnsureSuccessStatusCode();
+            Console.WriteLine("Mock");
         
         }
                                                                                             

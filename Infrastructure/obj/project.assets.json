@@ -1171,6 +1171,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.2",
           "Microsoft.Extensions.Caching.StackExchangeRedis": "9.0.2",
+          "Newtonsoft.Json": "13.0.3",
           "StackExchange.Redis": "2.8.24"
         },
         "compile": {
