@@ -53,5 +53,126 @@ namespace Infrastructure.VpnLibrary
                 throw;
             }
         }
+        public async Task GetInboundById(int inboundId) 
+        {
+            try
+            {
+                await _inbounds.GetInboundById(_header, inboundId);
+            }
+            catch (NullReferenceException ex)
+            {
+                try
+                {
+                    await UpdateHeaders();
+                    await _inbounds.GetInboundById(_header, inboundId);
+                }
+                catch (Exception exep)
+                {
+                    Console.WriteLine(exep.Message);
+                    throw;
+                }
+            }
+            catch (BadHttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public async Task GetInboundByEmail(string email) 
+        {
+            try
+            {
+                await _inbounds.GetInboundByEmail(_header, email);
+            }
+            catch (NullReferenceException ex)
+            {
+                try
+                {
+                    await UpdateHeaders();
+                    await _inbounds.GetInboundByEmail(_header, email);
+                }
+                catch (Exception exep)
+                {
+                    Console.WriteLine(exep.Message);
+                    throw;
+                }
+            }
+            catch (BadHttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public async Task GetInboundByUserId(string id) 
+        {
+            try
+            {
+                await _inbounds.GetInboundByUserId(_header, id);
+            }
+            catch (NullReferenceException ex)
+            {
+                try
+                {
+                    await UpdateHeaders();
+                    await _inbounds.GetInboundByUserId(_header, id);
+                }
+                catch (Exception exep)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            }
+            catch (BadHttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public async Task AddUserToInbound(string key) 
+        {
+            try
+            {
+                await _inbounds.AddToInbound(_header, key);
+            }
+            catch (NullReferenceException ex)
+            {
+                try
+                {
+                    await UpdateHeaders();
+                    await _inbounds.AddToInbound(_header, key);
+                }
+                catch (Exception exep)
+                {
+                    Console.WriteLine(exep.Message);
+                    throw;
+                }
+            }
+            catch (BadHttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            
+            }
+        }
     }
 }
+

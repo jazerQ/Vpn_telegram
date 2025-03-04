@@ -19,6 +19,21 @@ namespace Weather_bot.Commands
         {
             await _vpnAccess.GetListInbounds();
         }
-
+        public async Task GetInboundById(int id) 
+        {
+            await _vpnAccess.GetInboundById(id);
+        }
+        public async Task GetInboundByEmail(string email) 
+        {
+            await _vpnAccess.GetInboundByEmail(email);
+        }
+        public async Task GetInboundByUserId(string userId) 
+        {
+            await _vpnAccess.GetInboundByUserId(userId);
+        }
+        public async Task AddInbound(string name) 
+        {
+            await _vpnAccess.AddUserToInbound(name);
+        }
     }
 }

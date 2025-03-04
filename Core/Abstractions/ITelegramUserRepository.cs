@@ -5,7 +5,7 @@ namespace Core.Abstractions
     public interface ITelegramUserRepository
     {
         Task AddUser(TelegramUser user, CancellationToken cancellationToken);
-        Task Update(long id, string name, CancellationToken cancellationToken);
+        Task Update(long id, string name, string firstname, string lastname, string shortname, CancellationToken cancellationToken);
         Task<string> GetNameById(long id, CancellationToken cancellationToken);
     }
 }

@@ -19,6 +19,7 @@ namespace DataAccess
 
         public async Task AddUser(TelegramUser user, CancellationToken cancellationToken)
         {
+            
             if (await _context.TelegramUser.FirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken) == null)
             {
                 await _context.TelegramUser.AddAsync(user, cancellationToken);
@@ -26,14 +27,14 @@ namespace DataAccess
             }
             else
             {
-                await Update(user.Id, user.Name, cancellationToken);
+                await Update(user.Id, user.Name, user.FirstName, user.LastName, user.Shortname, cancellationToken);
             }
         }
         public async Task<string> GetNameById(long id, CancellationToken cancellationToken) 
         {  
                 return await _context.TelegramUser.Where(u => u.Id == id).Select(u => u.Name).SingleOrDefaultAsync(cancellationToken);   
         }
-        public async Task Update(long id, string name, CancellationToken cancellationToken)
+        public async Task Update(long id, string name, string firstname, string lastname, string shortname, CancellationToken cancellationToken)
         {
             await _context.TelegramUser
                 .Where(u => u.Id == id)

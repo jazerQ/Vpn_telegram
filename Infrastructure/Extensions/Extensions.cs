@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using VpnLibrary;
 
 namespace Infrastructure.VpnLibrary.Extensions
@@ -17,6 +18,7 @@ namespace Infrastructure.VpnLibrary.Extensions
             {
                 requestMessage.Headers.Append(keyvalue);
             }
+            requestMessage.Headers.Add("Accept", "application/json");
         }
     }
 }

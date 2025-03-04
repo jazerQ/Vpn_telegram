@@ -43,14 +43,32 @@ namespace Vpn_Telegram
                 await _actionByKey.DoAction(bot, message, cancellationToken);
                 return;
             }
-            switch (message.Text.ToLower())
+            if (int.TryParse(message.Text, out int id)) 
             {
+                await _vpnCommand.GetInboundById(id);
+                await bot.SendMessage(chatId, $"отправил в логи информацию об подключении номер", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
+            }
+            switch (message.Text.Split(' ')[0].ToLower())
+            {
+                
                 case "/start":
                     await StartCommands.ExecuteAsync(bot, chatId, user, cancellationToken);
                     break;
                 case "/help":
                     await bot.SendMessage(chatId, $"список команд для бота: /start - запускает бота \n/help - список возможных команд", cancellationToken: cancellationToken);
-                    break;   
+                    break;
+                case "/inboundid" when message.Text.Split(' ').Length > 1:
+                    await _vpnCommand.GetInboundByUserId(message.Text.Split(' ')[1]);
+                    await bot.SendMessage(chatId, $"отправил в лог", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
+                    break;
+                case "addme":
+                    await _vpnCommand.AddInbound(message.From.Id.ToString());
+                    await bot.SendMessage(chatId, $"добавил", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
+                    break;
+                case "/inbound" when message.Text.Split(' ').Length > 1: 
+                    await _vpnCommand.GetInboundByEmail(message.Text.Split(' ')[1]);
+                    await bot.SendMessage(chatId, $"отправил в логи информацию о пользователе {message.Text.Split(' ')[1]}", cancellationToken: cancellationToken);
+                    break;
                 case "поменять имя":
                     await NameCommands.ChangeNameRequest(_redisService.Db, bot, chatId, cancellationToken);
                     break;
@@ -65,6 +83,7 @@ namespace Vpn_Telegram
                     await bot.SendMessage(chatId, "отправил в логи", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
                     break;
                 default:
+                    
                     await bot.SendMessage(chatId, $"я не понимаю такой команды", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
                     break;
 
