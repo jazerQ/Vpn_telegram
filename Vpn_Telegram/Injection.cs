@@ -36,6 +36,8 @@ namespace Vpn_Telegram
             }); ;
             serviceCollection.AddScoped<VpnAccessGlobal>();
             serviceCollection.AddScoped<VpnCommand>();
+            serviceCollection.AddScoped<IVpnClientRepository, VpnClientRepository>();
+            serviceCollection.AddScoped<IVpnClientService, VpnClientService>();
             serviceCollection.AddScoped<IInbounds, Inbounds>();
             var serviceProvider = serviceCollection.BuildServiceProvider();
             return serviceProvider;

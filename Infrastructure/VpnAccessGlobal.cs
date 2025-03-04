@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Abstractions;
+using Core.Entities;
+using Core.Exceptions;
 using Infrastructure.VpnLibrary.apiRoutes.Get;
 using Microsoft.AspNetCore.Http;
+using Telegram.Bot.Types;
 using VpnLibrary;
 using VpnLibrary.apiRoutes.Post;
 
@@ -18,17 +23,19 @@ namespace Infrastructure.VpnLibrary
         private HttpHeaders _header;
         private readonly HttpClient _client;
         private readonly IInbounds _inbounds;
-        public VpnAccessGlobal(IHttpClientFactory clientFactory, IInbounds inbounds)
+        private readonly IVpnClientService _vpnService;
+        public VpnAccessGlobal(IHttpClientFactory clientFactory, IInbounds inbounds, IVpnClientService vpnClientService)
         {
             _client = clientFactory.CreateClient(StaticInfo.MainPath);
             _inbounds = inbounds;
+            _vpnService = vpnClientService;
         }
-        private async Task UpdateHeaders() 
+        private async Task UpdateHeaders()
         {
             Login login = new Login();
             _header = await login.GetHeaders(_client);
         }
-        public async Task GetListInbounds() 
+        public async Task GetListInbounds()
         {
             try
             {
@@ -41,19 +48,19 @@ namespace Infrastructure.VpnLibrary
                     await UpdateHeaders();
                     await _inbounds.GetAllInbounds(_header);
                 }
-                catch (Exception exep) 
+                catch (Exception exep)
                 {
                     Console.WriteLine(exep.Message);
                     throw;
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
         }
-        public async Task GetInboundById(int inboundId) 
+        public async Task GetInboundById(int inboundId)
         {
             try
             {
@@ -77,13 +84,13 @@ namespace Infrastructure.VpnLibrary
                 Console.WriteLine(ex.Message);
                 throw;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
         }
-        public async Task GetInboundByEmail(string email) 
+        public async Task GetInboundByEmail(string email)
         {
             try
             {
@@ -107,13 +114,13 @@ namespace Infrastructure.VpnLibrary
                 Console.WriteLine(ex.Message);
                 throw;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
         }
-        public async Task GetInboundByUserId(string id) 
+        public async Task GetInboundByUserId(string id)
         {
             try
             {
@@ -137,24 +144,37 @@ namespace Infrastructure.VpnLibrary
                 Console.WriteLine(ex.Message);
                 throw;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
         }
-        public async Task AddUserToInbound(string key) 
+        public async Task AddSimpleUserToInbound(TelegramUser user, CancellationToken cancellationToken)
         {
             try
             {
-                await _inbounds.AddToInbound(_header, key);
+               
+                if (await _vpnService.IsHaveVpn(user.Id, cancellationToken)) throw new AlreadyHaveException("у вас уже есть строка подключения");
+                
+                await _inbounds.AddSimpleToInbound(_header, user, cancellationToken);
+            }
+            catch (AlreadyHaveException ex) 
+            {
+                var time = await GetRemainderTime(user.Id, cancellationToken);
+                if (time.Nanoseconds < -1)
+                {
+                    throw new VpnTimeIsOverException("ваша пробная подписка закончилась, продлите ее купив полную");
+                }
+                throw;
+                
             }
             catch (NullReferenceException ex)
             {
                 try
                 {
                     await UpdateHeaders();
-                    await _inbounds.AddToInbound(_header, key);
+                    await _inbounds.AddSimpleToInbound(_header, user, cancellationToken);
                 }
                 catch (Exception exep)
                 {
@@ -166,11 +186,79 @@ namespace Infrastructure.VpnLibrary
             {
                 Console.WriteLine(ex.Message);
                 throw;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
-            
+
+            }
+        }
+        public async Task AddPrimaryToInbound(TelegramUser key, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (await _vpnService.IsHaveVpn(key.Id, cancellationToken)) throw new AlreadyHaveException("у вас уже есть строка подключения");
+
+                await _inbounds.AddPrimaryToInbound(_header, key, cancellationToken);
+            }
+            catch (AlreadyHaveException ex)
+            {
+                throw;
+
+            }
+            catch (NullReferenceException ex)
+            {
+                try
+                {
+                    await UpdateHeaders();
+                    await _inbounds.AddPrimaryToInbound(_header, key, cancellationToken);
+                }
+                catch (Exception exep)
+                {
+                    Console.WriteLine(exep.Message);
+                    throw;
+                }
+            }
+            catch (BadHttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public async Task<string> GetConnectionString(long tgId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await _vpnService.GetConnectionString(tgId, cancellationToken);
+            }
+            catch (SqlNullValueException ex)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task<TimeSpan> GetRemainderTime(long tgId, CancellationToken cancellationToken) 
+        {
+            try 
+            {
+                return await _vpnService.GetRemainderTime(tgId, cancellationToken);   
+            }
+            catch (SqlNullValueException ex)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

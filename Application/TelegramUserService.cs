@@ -23,5 +23,9 @@ namespace Application
         {
             await _userRepository.AddUser(user, cancellationToken);
         }
+        public async Task<Guid> GetVpnId(long id, CancellationToken cancellationToken) 
+        {
+           return await _userRepository.GetVpnId(id, cancellationToken);
+        }
     }
 }

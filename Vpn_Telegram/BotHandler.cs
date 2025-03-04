@@ -48,22 +48,26 @@ namespace Vpn_Telegram
                 await _vpnCommand.GetInboundById(id);
                 await bot.SendMessage(chatId, $"отправил в логи информацию об подключении номер", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
             }
-            switch (message.Text.Split(' ')[0].ToLower())
+            switch (message.Text.ToLower())
             {
-                
+                case "полная подписка":
+                    await _vpnCommand.AddPrimaryUserToInbound(bot, message, user, cancellationToken);
+                    break;
+                case "получить пробный впн":
+                    await _vpnCommand.AddSimpleUserToInbound(bot, message, user, cancellationToken);
+                    break;
+                case "моя строка подключения":
+                    await _vpnCommand.GetMyConnectionString(bot, message.From.Id, cancellationToken);
+                    break;
                 case "/start":
                     await StartCommands.ExecuteAsync(bot, chatId, user, cancellationToken);
                     break;
                 case "/help":
-                    await bot.SendMessage(chatId, $"список команд для бота: /start - запускает бота \n/help - список возможных команд", cancellationToken: cancellationToken);
+                    await bot.SendMessage(chatId, $"*ТИПО МЕТОДИЧКА*", cancellationToken: cancellationToken);
                     break;
                 case "/inboundid" when message.Text.Split(' ').Length > 1:
                     await _vpnCommand.GetInboundByUserId(message.Text.Split(' ')[1]);
                     await bot.SendMessage(chatId, $"отправил в лог", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
-                    break;
-                case "addme":
-                    await _vpnCommand.AddInbound(message.From.Id.ToString());
-                    await bot.SendMessage(chatId, $"добавил", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
                     break;
                 case "/inbound" when message.Text.Split(' ').Length > 1: 
                     await _vpnCommand.GetInboundByEmail(message.Text.Split(' ')[1]);

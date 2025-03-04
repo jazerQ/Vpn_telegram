@@ -14,7 +14,7 @@ namespace Weather_bot.Controllers
     {
         public static async Task ExecuteAsync(ITelegramBotClient bot, long chatId, string username, CancellationToken cancellationToken)
         {
-            await bot.SendMessage(chatId, $"Привет, {username} я твой тг бот для впн !", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
+            await bot.SendMessage(chatId, $"Привет, {username} я твой телеграм бот для впн !", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
         }
     }
 }

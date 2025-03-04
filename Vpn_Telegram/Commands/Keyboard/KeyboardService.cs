@@ -12,8 +12,8 @@ namespace Weather_bot.Commands.Keyboard
         public static ReplyKeyboardMarkup GetMainKeyboard()
         {
             return new ReplyKeyboardMarkup(new[] {
-                new KeyboardButton[]{"Поменять имя" },
-                new KeyboardButton[]{ "Мое имя" },
+                new KeyboardButton[]{ "Получить пробный ВПН", "моя строка подключения" },
+                new KeyboardButton[]{ "Полная подписка" },
                 new KeyboardButton[]{ "О проекте" }
             })
             {

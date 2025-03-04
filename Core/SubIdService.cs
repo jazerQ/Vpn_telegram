@@ -15,7 +15,7 @@ namespace Core
         public static string Generate() 
         {
             string res = "";
-            for (int i = 0; i < chars.Length; i++) 
+            for (int i = 0; i < 16; i++) 
             {
 
                 res += chars[random.Next(chars.Length)];

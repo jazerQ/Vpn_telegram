@@ -51,7 +51,8 @@ namespace Weather_bot.Commands
                     LastName = message.From.LastName ?? "NaN",
                     Name = name,
                     Shortname = message.From.Username ?? "NaN",
-                    StartDate = DateTime.UtcNow
+                    StartDate = DateTime.UtcNow,
+                    VpnClientId = await userService.GetVpnId(message.From.Id, cancellationToken)
                 };
                 await userService.AddUser(tgUser, cancellationToken);
                 await bot.SendMessage(message.From.Id, $"ооо привет, {name}! Я тебя запомнил", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);

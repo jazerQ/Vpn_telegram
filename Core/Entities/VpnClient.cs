@@ -20,5 +20,6 @@ namespace Core.Entities
         public string subId { get; set; } = "";
         public int reset { get; set; } = 0;
         public bool isPrimaryUser { get; set; }
+        public string ConnectionString { get; set; } = string.Empty;
     }
 }
