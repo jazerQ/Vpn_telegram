@@ -110,5 +110,37 @@ namespace Infrastructure.VpnLibrary.apiRoutes.Get
             response.EnsureSuccessStatusCode();
             Console.WriteLine(await response.Content.ReadAsStringAsync(cancellationToken));
         }
+        public async Task UpdateIntoInbound(HttpHeaders headers, AddClientToInboundModel client, Guid clientId, CancellationToken cancellationToken) 
+        {
+            string json = JsonConvert.SerializeObject(client);
+            Console.WriteLine(json);
+            HttpRequestMessage request = new HttpRequestMessage(System.Net.Http.HttpMethod.Post, $"{StaticInfo.MainPath}/panel/api/inbounds/updateClient/{clientId}")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            await request.GetHeaders(headers);
+            HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine(await response.Content.ReadAsStringAsync(cancellationToken));
+
+        }
+        public async Task UpdateClientIntoInbound(HttpHeaders headers, TelegramUser user, CancellationToken cancellationToken) 
+        {
+            var clientEntity = await _vpnClientService.GetClientById(user.Id, cancellationToken);
+            Client client = new Client
+            {
+                id = clientEntity.id,
+                email = user.Id.ToString(),
+                flow = "xtls-rprx-vision",
+                expiryTime = ((DateTimeOffset)DateTime.Now.AddDays(30)).ToUnixTimeMilliseconds(),
+                enable = true,
+                limitIp = 2,
+                totalGB = 0,
+                subId = clientEntity.subId
+            };
+            AddClientToInboundModel addClientToInbound = AddClientToInboundModel.GetClient(client);
+            await _vpnClientService.UpdateEntity(client, user, true, cancellationToken);
+            await UpdateIntoInbound(headers, addClientToInbound, clientEntity.id, cancellationToken);
+        }
     }
 }

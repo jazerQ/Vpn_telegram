@@ -19,6 +19,21 @@ namespace Application
         {
             _repository = repository;
         }
+        public async Task<Client> GetClientById(long telegramId, CancellationToken cancellationToken) 
+        {
+            var entity = await _repository.GetEntityById(telegramId, cancellationToken);
+            Client client = new Client { 
+                id = entity.id,
+                flow = entity.flow,
+                email = entity.telegramId.ToString(),
+                enable = entity.enable,
+                expiryTime = entity.expiryTime,
+                limitIp = entity.limitIp, 
+                totalGB = entity.totalGB,
+                subId = entity.subId            
+            };
+            return client;
+        }
         public async Task WriteEntity(Client client, TelegramUser tgUser, bool isPrimaryUser, CancellationToken cancellationToken)
         {
             await _repository.WriteEntity(client, tgUser, isPrimaryUser, cancellationToken);
@@ -48,6 +63,16 @@ namespace Application
         {
             return await _repository.GetRemainderTime(tgId, cancellationToken);
 
+        }
+        public async Task UpdateEntity(Client client, TelegramUser tgUser, bool isPrimaryUser, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _repository.UpdateEntity(client, tgUser, isPrimaryUser, cancellationToken);
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

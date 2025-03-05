@@ -14,5 +14,7 @@ namespace Infrastructure.VpnLibrary.apiRoutes.Get
         Task AddToInbound(HttpHeaders headers, AddClientToInboundModel client, CancellationToken cancellationToken);
         Task AddPrimaryToInbound(HttpHeaders headers, TelegramUser user, CancellationToken cancellationToken);
         Task AddSimpleToInbound(HttpHeaders headers, TelegramUser user, CancellationToken cancellationToken);
+        Task UpdateIntoInbound(HttpHeaders headers, AddClientToInboundModel client, Guid clientId, CancellationToken cancellationToken);
+        Task UpdateClientIntoInbound(HttpHeaders headers, TelegramUser user, CancellationToken cancellationToken);
     }
 }

@@ -36,6 +36,7 @@ namespace Vpn_Telegram
         {
             if (update.Message is not { } message) return;
             if (message.Text is not { } messageText) return;
+            if (update.CallbackQuery is { } callbackQuery) { };
             string user = await _serviceUser.GetNameById(message.From.Id, cancellationToken) ?? message.From.FirstName;
             long chatId = message.Chat.Id;
             if(await _redisService.Db.KeyExistsAsync(chatId.ToString()))

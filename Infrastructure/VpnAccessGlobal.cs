@@ -204,6 +204,11 @@ namespace Infrastructure.VpnLibrary
             }
             catch (AlreadyHaveException ex)
             {
+                var time = await GetRemainderTime(key.Id, cancellationToken);
+                if (time.Nanoseconds < -1)
+                {
+                    throw new VpnTimeIsOverException("ваша подписка закончилась, продлите?");
+                }
                 throw;
 
             }

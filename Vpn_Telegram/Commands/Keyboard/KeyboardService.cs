@@ -27,6 +27,11 @@ namespace Weather_bot.Commands.Keyboard
             return new InlineKeyboardMarkup(new[] {
                 new[]{ InlineKeyboardButton.WithUrl("Github проекта", "https://github.com/jazerQ/weather_telegram_bot") }
             });
-        } 
+        }
+        public static InlineKeyboardMarkup GetInlineKeyboardForPay() 
+        {
+            return new InlineKeyboardMarkup(new[] {new[]{ InlineKeyboardButton.WithUrl("оплатить", "https://github.com/jazerQ") }
+            });
+        }
     }
 }

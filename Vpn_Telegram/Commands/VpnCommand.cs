@@ -77,6 +77,10 @@ namespace Weather_bot.Commands
             {
                 await bot.SendMessage(message.From.Id, $"у тебя уже есть строка подключения введи команду \"моя строка подключения\"", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);
             }
+            catch (VpnTimeIsOverException ex) 
+            {
+                await bot.SendMessage(message.From.Id, $"{ex.Message}", replyMarkup: KeyboardService.GetInlineKeyboardForPay(), cancellationToken: cancellationToken);
+            }
             catch (Exception ex)
             {
                 await bot.SendMessage(message.From.Id, $"{ex.Message}", replyMarkup: KeyboardService.GetMainKeyboard(), cancellationToken: cancellationToken);

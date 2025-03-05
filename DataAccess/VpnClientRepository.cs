@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Abstractions;
@@ -21,11 +22,11 @@ namespace DataAccess
             _context = context;
             _tgRepository = telegramUserRepository;
         }
-        public async Task<VpnClient> GetEntityById(string telegramId, CancellationToken cancellationToken)
+        public async Task<VpnClient> GetEntityById(long telegramId, CancellationToken cancellationToken)
         {
             try
             {
-                var vpn = _context.VpnClient.FirstOrDefault(vpn => vpn.telegramId.ToString() == telegramId) ?? throw new NullReferenceException("не нашел");
+                var vpn = _context.VpnClient.FirstOrDefault(vpn => vpn.telegramId == telegramId) ?? throw new NullReferenceException("не нашел");
                 return vpn;
             }
             catch (NullReferenceException ex)
@@ -64,6 +65,18 @@ namespace DataAccess
             await _context.VpnClient.AddAsync(VpnClientEntity, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
+        public async Task UpdateEntity(Client client, TelegramUser tgUser, bool isPrimaryUser, CancellationToken cancellationToken) 
+        {
+            tgUser.VpnClientId = client.id;
+            
+            await _tgRepository.AddUser(tgUser, cancellationToken);
+            await _context.VpnClient.Where(vpn => vpn.id == client.id)
+                                    .ExecuteUpdateAsync(v => v.SetProperty(vp => vp.isPrimaryUser, isPrimaryUser)
+                                                              .SetProperty(vp => vp.expiryTime, client.expiryTime)
+                                                              .SetProperty(vp => vp.totalGB, client.totalGB)
+                                                              .SetProperty(vp => vp.limitIp, client.limitIp), cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+        } 
         public async Task<string> GetConnectionString(long tgId, CancellationToken cancellationToken)
         {
             try
