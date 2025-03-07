@@ -52,6 +52,7 @@ namespace Vpn_Telegram
             switch (message.Text.ToLower())
             {
                 case "полная подписка":
+                    
                     await _vpnCommand.AddPrimaryUserToInbound(bot, message, user, cancellationToken);
                     break;
                 case "получить пробный впн":

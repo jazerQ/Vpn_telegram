@@ -26,7 +26,7 @@ namespace Infrastructure.VpnLibrary
         private readonly IVpnClientService _vpnService;
         public VpnAccessGlobal(IHttpClientFactory clientFactory, IInbounds inbounds, IVpnClientService vpnClientService)
         {
-            _client = clientFactory.CreateClient(StaticInfo.MainPath);
+            _client = clientFactory.CreateClient();
             _inbounds = inbounds;
             _vpnService = vpnClientService;
         }

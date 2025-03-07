@@ -39,6 +39,7 @@ namespace Vpn_Telegram
             serviceCollection.AddScoped<IVpnClientRepository, VpnClientRepository>();
             serviceCollection.AddScoped<IVpnClientService, VpnClientService>();
             serviceCollection.AddScoped<IInbounds, Inbounds>();
+            serviceCollection.AddScoped<FreeKassaService>();
             var serviceProvider = serviceCollection.BuildServiceProvider();
             return serviceProvider;
         }
