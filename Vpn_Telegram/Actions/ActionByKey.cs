@@ -41,7 +41,8 @@ namespace Weather_bot.Actions
                         case StatesOfUser.WaitingName:
                             await NameCommands.ChangeName(bot, sender, _telegramUserService, cancellationToken);
                             break;
-
+                        case StatesOfUser.WaitingPayment:
+                            await
 
                         default:
                                 throw new Exception("Неизвестное состояние пользователя");

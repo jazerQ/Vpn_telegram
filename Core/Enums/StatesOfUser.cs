@@ -9,6 +9,7 @@ namespace Core.Enums
     public enum StatesOfUser
     {
         WaitingWeather,
-        WaitingName
+        WaitingName,
+        WaitingPayment
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Application;
 using Core.Abstractions;
 using Core.Entities;
+using Core.Enums;
 using Infrastructure;
 using Infrastructure.VpnLibrary;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -52,8 +53,7 @@ namespace Vpn_Telegram
             switch (message.Text.ToLower())
             {
                 case "полная подписка":
-                    
-                    await _vpnCommand.AddPrimaryUserToInbound(bot, message, user, cancellationToken);
+                    await _redisService.Db.StringSetAsync(message.From.Id.ToString(), StatesOfUser.WaitingPayment.ToString());
                     break;
                 case "получить пробный впн":
                     await _vpnCommand.AddSimpleUserToInbound(bot, message, user, cancellationToken);
