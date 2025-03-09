@@ -14,7 +14,10 @@ namespace DataAccess.Configurations
         public void Configure(EntityTypeBuilder<TelegramUser> builder)
         {
             builder.HasKey(u => u.Id);
-            builder.HasOne(tg => tg.VpnClient).WithOne(vpn => vpn.TelegramUser).HasForeignKey<TelegramUser>(tg => tg.VpnClientId);
+            builder.HasOne(tg => tg.VpnClient).WithOne(vpn => vpn.TelegramUser)
+                .HasForeignKey<TelegramUser>(tg => tg.VpnClientId);
+            builder.HasOne(tg => tg.UserPayments).WithOne(up => up.TelegramUser)
+                .HasForeignKey<TelegramUser>(tg => tg.UserPaymentId);
 
         }
     }

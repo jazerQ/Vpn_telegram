@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Weather_bot.Commands.Keyboard
@@ -28,10 +29,11 @@ namespace Weather_bot.Commands.Keyboard
                 new[]{ InlineKeyboardButton.WithUrl("Github проекта", "https://github.com/jazerQ/weather_telegram_bot") }
             });
         }
-        public static InlineKeyboardMarkup GetInlineKeyboardForPay() 
+        public static InlineKeyboardMarkup GetInlineKeyboardForPay(long chatId) 
         {
-            return new InlineKeyboardMarkup(new[] {new[]{ InlineKeyboardButton.WithUrl("оплатить", "https://github.com/jazerQ") }
+            return new InlineKeyboardMarkup(new[] {new[]{ InlineKeyboardButton.WithUrl("оплатить", FreeKassaService.FormOfPay(chatId)) }
             });
         }
+       
     }
 }

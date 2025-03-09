@@ -9,10 +9,10 @@ using VpnLibrary;
 
 namespace Infrastructure
 {
-    public class FreeKassaService
+    public static class FreeKassaService
     {
-        private readonly string _path = "https://pay.fk.money/";
-        public string FormOfPay(long tgId) 
+        private static readonly string _path = "https://pay.fk.money/";
+        public static string FormOfPay(long tgId) 
         {
             string telegramIdString = tgId.ToString();
             string signature = $"{StaticInfo.IdOfShop}:{StaticInfo.PaymentAmount}:{StaticInfo.Secret1}:RUB:{telegramIdString}";
