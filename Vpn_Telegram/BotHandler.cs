@@ -53,7 +53,7 @@ namespace Vpn_Telegram
             switch (message.Text.ToLower())
             {
                 case "полная подписка":
-                    await bot.SendMessage(chatId, "Полная подписка стоит 250 RUB, вы готовы оплатить ее?", replyMarkup: )
+                    await bot.SendMessage(chatId, "Полная подписка стоит 250 RUB, вы готовы оплатить ее?", replyMarkup: KeyboardService.GetInlineKeyboardForPay(chatId), cancellationToken: cancellationToken);
                     break;
                 case "получить пробный впн":
                     await _vpnCommand.AddSimpleUserToInbound(bot, message, user, cancellationToken);

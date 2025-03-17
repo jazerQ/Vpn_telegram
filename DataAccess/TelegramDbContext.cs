@@ -17,10 +17,15 @@ namespace DataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserPaymentsConfiguration());
+           
             modelBuilder.ApplyConfiguration(new TelegramUserConfiguration());
+           
             modelBuilder.ApplyConfiguration(new VpnClientConfiguration());
+
+            modelBuilder.ApplyConfiguration(new UserPaymentsConfiguration());
+            
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }

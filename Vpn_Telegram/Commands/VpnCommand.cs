@@ -79,7 +79,7 @@ namespace Weather_bot.Commands
             }
             catch (VpnTimeIsOverException ex) 
             {
-                await bot.SendMessage(message.From.Id, $"{ex.Message}", replyMarkup: KeyboardService.GetInlineKeyboardForPay(), cancellationToken: cancellationToken);
+                await bot.SendMessage(message.From.Id, $"{ex.Message}", replyMarkup: KeyboardService.GetInlineKeyboardForPay(message.From.Id), cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
