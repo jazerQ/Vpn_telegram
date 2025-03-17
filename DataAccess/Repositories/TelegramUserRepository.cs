@@ -7,7 +7,7 @@ using Core.Abstractions;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess
+namespace DataAccess.Repositories
 {
     public class TelegramUserRepository : ITelegramUserRepository
     {
@@ -19,7 +19,7 @@ namespace DataAccess
 
         public async Task AddUser(TelegramUser user, CancellationToken cancellationToken)
         {
-            
+
             if (await _context.TelegramUser.FirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken) == null)
             {
                 await _context.TelegramUser.AddAsync(user, cancellationToken);
@@ -27,12 +27,12 @@ namespace DataAccess
             }
             else
             {
-                await Update(user.Id, user.Name, user.FirstName, user.LastName, user.Shortname, user.VpnClientId,cancellationToken);
+                await Update(user.Id, user.Name, user.FirstName, user.LastName, user.Shortname, user.VpnClientId, cancellationToken);
             }
         }
-        public async Task<string> GetNameById(long id, CancellationToken cancellationToken) 
-        {  
-                return await _context.TelegramUser.Where(u => u.Id == id).Select(u => u.Name).SingleOrDefaultAsync(cancellationToken);   
+        public async Task<string> GetNameById(long id, CancellationToken cancellationToken)
+        {
+            return await _context.TelegramUser.Where(u => u.Id == id).Select(u => u.Name).SingleOrDefaultAsync(cancellationToken);
         }
         public async Task Update(long id, string name, string firstname, string lastname, string shortname, Guid vpnId, CancellationToken cancellationToken)
         {
@@ -45,7 +45,7 @@ namespace DataAccess
                                           .SetProperty(tu => tu.VpnClientId, vpnId), cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
-        public async Task<Guid> GetVpnId(long id, CancellationToken cancellationToken) 
+        public async Task<Guid> GetVpnId(long id, CancellationToken cancellationToken)
         {
             return await _context.TelegramUser.Where(u => u.Id == id).Select(u => u.VpnClientId).SingleOrDefaultAsync(cancellationToken);
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application;
 using Core.Abstractions;
 using DataAccess;
+using DataAccess.Repositories;
 using Infrastructure;
 using Infrastructure.VpnLibrary;
 using Infrastructure.VpnLibrary.apiRoutes.Get;

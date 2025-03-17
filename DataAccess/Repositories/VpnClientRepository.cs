@@ -11,7 +11,7 @@ using Core.Entities;
 using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess
+namespace DataAccess.Repositories
 {
     public class VpnClientRepository : IVpnClientRepository
     {
@@ -42,7 +42,7 @@ namespace DataAccess
         }
         public async Task WriteEntity(Client client, TelegramUser tgUser, bool isPrimaryUser, CancellationToken cancellationToken)
         {
-            
+
             tgUser.VpnClientId = client.id;
 
             var VpnClientEntity = new VpnClient
@@ -58,17 +58,17 @@ namespace DataAccess
                 subId = client.subId,
                 telegramId = long.Parse(client.email),
                 tgId = "",
-                
+
                 ConnectionString = $"vless://{client.id}@150.241.67.48:443?type=tcp&security=reality&pbk=93IW1CnDZgrPxCGpnvpE2Eh8lsnrBVGZ3azk8hYurB0&fp=chrome&sni=tvdvdstore.com&sid=4ca5bc1e&spx=%2F&flow={client.flow}#RusLan-{client.email}"
             };
             await _tgRepository.AddUser(tgUser, cancellationToken);
             await _context.VpnClient.AddAsync(VpnClientEntity, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
-        public async Task UpdateEntity(Client client, TelegramUser tgUser, bool isPrimaryUser, CancellationToken cancellationToken) 
+        public async Task UpdateEntity(Client client, TelegramUser tgUser, bool isPrimaryUser, CancellationToken cancellationToken)
         {
             tgUser.VpnClientId = client.id;
-            
+
             await _tgRepository.AddUser(tgUser, cancellationToken);
             await _context.VpnClient.Where(vpn => vpn.id == client.id)
                                     .ExecuteUpdateAsync(v => v.SetProperty(vp => vp.isPrimaryUser, isPrimaryUser)
@@ -76,7 +76,7 @@ namespace DataAccess
                                                               .SetProperty(vp => vp.totalGB, client.totalGB)
                                                               .SetProperty(vp => vp.limitIp, client.limitIp), cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-        } 
+        }
         public async Task<string> GetConnectionString(long tgId, CancellationToken cancellationToken)
         {
             try
@@ -92,25 +92,27 @@ namespace DataAccess
             {
                 throw;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 throw;
             }
         }
-        public async Task<bool> IsHaveVpn(long tgId, CancellationToken cancellationToken) 
+        public async Task<bool> IsHaveVpn(long tgId, CancellationToken cancellationToken)
         {
-            try 
+            try
             {
                 var vpnClient = await _context.VpnClient.Where(vpn => vpn.telegramId == tgId).FirstOrDefaultAsync(cancellationToken);
                 return vpnClient != null;
-            }catch(Exception ex) 
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
-            
+
         }
-        public async Task<TimeSpan> GetRemainderTime(long tgId, CancellationToken cancellationToken) 
+        public async Task<TimeSpan> GetRemainderTime(long tgId, CancellationToken cancellationToken)
         {
             var expiryTime = await _context.VpnClient.Where(vpn => vpn.telegramId == tgId).Select(vpn => vpn.expiryTime).SingleOrDefaultAsync(cancellationToken);
             DateTime expiryDateTime = DateTimeOffset.FromUnixTimeMilliseconds(expiryTime).DateTime;

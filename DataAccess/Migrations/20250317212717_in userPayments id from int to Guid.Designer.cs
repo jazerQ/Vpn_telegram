@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(TelegramDbContext))]
-    [Migration("20250304123812_Add VpnClientTable")]
-    partial class AddVpnClientTable
+    [Migration("20250317212717_in userPayments id from int to Guid")]
+    partial class inuserPaymentsidfrominttoGuid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("UserPaymentId")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("VpnClientId")
                         .HasColumnType("uuid");
 
@@ -61,11 +64,38 @@ namespace DataAccess.Migrations
                     b.ToTable("TelegramUser");
                 });
 
+            modelBuilder.Entity("Core.Entities.UserPayments", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("TelegramId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TelegramId")
+                        .IsUnique();
+
+                    b.ToTable("UserPayments");
+                });
+
             modelBuilder.Entity("Core.Entities.VpnClient", b =>
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ConnectionString")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("enable")
                         .HasColumnType("boolean");
@@ -108,6 +138,17 @@ namespace DataAccess.Migrations
                     b.ToTable("VpnClient");
                 });
 
+            modelBuilder.Entity("Core.Entities.UserPayments", b =>
+                {
+                    b.HasOne("Core.Entities.TelegramUser", "TelegramUser")
+                        .WithOne("UserPayments")
+                        .HasForeignKey("Core.Entities.UserPayments", "TelegramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TelegramUser");
+                });
+
             modelBuilder.Entity("Core.Entities.VpnClient", b =>
                 {
                     b.HasOne("Core.Entities.TelegramUser", "TelegramUser")
@@ -121,6 +162,8 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Core.Entities.TelegramUser", b =>
                 {
+                    b.Navigation("UserPayments");
+
                     b.Navigation("VpnClient");
                 });
 #pragma warning restore 612, 618
