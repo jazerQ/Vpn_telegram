@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Abstractions;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
-    public class UserPaymentsRepository
+    public class UserPaymentsRepository : IUserPaymentsRepository
     {
         private readonly TelegramDbContext _context;
         public UserPaymentsRepository(TelegramDbContext context)
